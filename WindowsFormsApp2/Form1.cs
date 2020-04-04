@@ -56,7 +56,7 @@ namespace WindowsFormsApp2
             else
             {
                 Random rand = new Random();
-                int a = rand.Next(1, 3);
+                int a = rand.Next(1, 4);
                 passenger.Add(a);
                 if (a == 1)
                 {
