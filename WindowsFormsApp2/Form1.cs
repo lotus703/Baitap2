@@ -16,32 +16,35 @@ namespace WindowsFormsApp2
     public partial class Form1 : Form
     {
         int n;
-        int[] passenger;
+        List<int> passenger = new List<int>();
         public Form1()
         {
             InitializeComponent();
-         
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            n = Int32.Parse(textBox1.Text);
             Random rand = new Random();
-            for (int i = 1; i<n; i++)
+            for (int i = 1; i < n; i++)
             {
-                passenger[i] = rand.Next(1, 3);
-                switch (passenger[i])
+                int a = rand.Next(1, 3);
+                passenger.Add(a);
+                if (a == 1)
                 {
-                    case 1:
-                        label1.Text = "Thuong gia";
-                        break;
-                    case 2:
-                        label1.Text = "Dat ve online";
-                        break;
-                    case 3:
-                        label1.Text = "Thuong";
-                        break;
+                    label1.Text = "Thuong gia";
+                }
+                if (a == 2)
+                {
+                    label1.Text = "Dat ve online";
+                }
+                if (a == 3)
+                {
+                    label1.Text = "Thuong";
                 }
                 Thread.Sleep(1000);
+
             }
             
         }
@@ -57,8 +60,7 @@ namespace WindowsFormsApp2
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            n = Int32.Parse(textBox1.Text);
-            passenger = new int[n];
+            
         }
     }
 }
