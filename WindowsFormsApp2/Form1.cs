@@ -18,6 +18,10 @@ namespace WindowsFormsApp2
         int counter = 0;
         int n;
         List<int> passenger = new List<int>();
+        List<int> viper = new List<int>();
+        List<int> onliner = new List<int>();
+        List<int> guests = new List<int>();
+        List<int> viperdone = new List<int>();
         public Form1()
         {
             InitializeComponent();
@@ -31,6 +35,7 @@ namespace WindowsFormsApp2
             timer1.Interval = 1000;
             timer1.Tick += new EventHandler(timer1_Tick);
             timer1.Start();
+            timerVIp.Start();
         }
 
 
@@ -49,7 +54,7 @@ namespace WindowsFormsApp2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (counter >= n)
+            if (counter > n)
             {
                 timer1.Stop();
             }
@@ -58,17 +63,24 @@ namespace WindowsFormsApp2
                 Random rand = new Random();
                 int a = rand.Next(1, 4);
                 passenger.Add(a);
+                CountPassenger.Text = passenger.Count.ToString();
                 if (a == 1)
                 {
                     label1.Text = "Thuong gia";
+                    viper.Add(a);
+                    CountViper.Text = viper.Count.ToString();
                 }
                 if (a == 2)
                 {
                     label1.Text = "Dat ve online";
+                    onliner.Add(a);
+                    CountOnliner.Text = onliner.Count.ToString();
                 }
                 if (a == 3)
                 {
                     label1.Text = "Thuong";
+                    guests.Add(a);
+                    CountGuests.Text = guests.Count.ToString();
                 }
                 counter++;
             }
@@ -92,6 +104,37 @@ namespace WindowsFormsApp2
             //    //Thread.Sleep(1000);
 
             //}
+        }
+
+        private bool CheckTime(int CountTime, int Present)
+        {
+            if (CountTime == Present)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        private void timerVIp_Tick(object sender, EventArgs e)
+        {
+            int Start = Int32.Parse(txtTImeStartVip.Text);
+            int End = Int32.Parse(txtTimeEndVip.Text);
+            int timer = End - Start;
+            int present = 0;
+
+                txtDoingVip.Text = "Đang xử lí";
+                if (CheckTime(timer, present) == true)
+                {          
+                    viperdone.Add(1);
+                    viper.RemoveAt(0);
+                    txtDoingVip.Text = "Trống";
+                    CountViper.Text = viper.Count.ToString();
+                    CountViperDone.Text = viperdone.Count.ToString();
+                    present = 0;
+                }
+                else
+                    present++;
+            
         }
     }
 }
