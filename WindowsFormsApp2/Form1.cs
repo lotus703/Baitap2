@@ -18,10 +18,26 @@ namespace WindowsFormsApp2
         int counter = 0;
         int n;
         List<int> passenger = new List<int>();
+
+
+        // VIP
         List<int> viper = new List<int>();
-        List<int> onliner = new List<int>();
-        List<int> guests = new List<int>();
+        int TimeLimitVip;
+        int CounterVip = 0;
         List<int> viperdone = new List<int>();
+
+        //Online
+        List<int> onliner = new List<int>();
+        int TimeLimitOnline;
+        int CounterOnline = 0;
+        List<int> onlinedone = new List<int>();
+
+        //Guest
+        List<int> guests = new List<int>();
+        int TimeLimitGuest;
+        int CounterGuest = 0;
+        List<int> guestsdone = new List<int>();
+
         public Form1()
         {
             InitializeComponent();
@@ -32,10 +48,9 @@ namespace WindowsFormsApp2
         {
             counter = 0;
             n = Int32.Parse(textBox1.Text);
-            timer1.Interval = 1000;
-            timer1.Tick += new EventHandler(timer1_Tick);
-            timer1.Start();
-            timerVIp.Start();
+            //timer1.Interval = 1000;
+            //timer1.Tick += new EventHandler(timer1_Tick);
+            timer1.Start();         
         }
 
 
@@ -54,21 +69,22 @@ namespace WindowsFormsApp2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (counter > n)
+            if (counter >= n)
             {
-                timer1.Stop();
+                    
             }
             else
             {
                 Random rand = new Random();
                 int a = rand.Next(1, 4);
-                passenger.Add(a);
+                passenger.Add(2);
                 CountPassenger.Text = passenger.Count.ToString();
                 if (a == 1)
                 {
                     label1.Text = "Thuong gia";
                     viper.Add(a);
                     CountViper.Text = viper.Count.ToString();
+                    
                 }
                 if (a == 2)
                 {
@@ -85,56 +101,78 @@ namespace WindowsFormsApp2
                 counter++;
             }
 
-            //for (int i = 1; i < n; i++)
-            //{
-            //    int a = rand.Next(1, 3);
-            //    passenger.Add(a);
-            //    if (a == 1)
-            //    {
-            //        label1.Text = "Thuong gia";
-            //    }
-            //    if (a == 2)
-            //    {
-            //        label1.Text = "Dat ve online";
-            //    }
-            //    if (a == 3)
-            //    {
-            //        label1.Text = "Thuong";
-            //    }
-            //    //Thread.Sleep(1000);
-
-            //}
-        }
-
-        private bool CheckTime(int CountTime, int Present)
-        {
-            if (CountTime == Present)
+            if (viper.Count > 0)
             {
-                return true;
+                Random time = new Random();
+                int Time = time.Next(int.Parse(txtTimeStartVip.Text), int.Parse(txtTimeStartVip.Text));
+                DoorVipDoing(Time);
             }
-            else return false;
+            if (onliner.Count > 0)
+            {
+                Random time = new Random();
+                int Time = time.Next(int.Parse(txtTimeStartOnline.Text), int.Parse(txtTimeEndOnline.Text));
+                DoorOnlineDoing(Time);
+            }
+            if (guests.Count > 0)
+            {
+                Random time = new Random();
+                int Time = time.Next(int.Parse(txtTimeStartGuest.Text), int.Parse(txtTimeEndGuest.Text));
+                DoorGuestDoing(Time);
+            }
         }
 
-        private void timerVIp_Tick(object sender, EventArgs e)
+        private void DoorVipDoing(int Time)
         {
-            int Start = Int32.Parse(txtTImeStartVip.Text);
-            int End = Int32.Parse(txtTimeEndVip.Text);
-            int timer = End - Start;
-            int present = 0;
-
+            if (Time - CounterVip == 0)
+            {
+                viperdone.Add(1);
+                viper.RemoveAt(0);
+                txtDoingVip.Text = "Trống";
+                CountViper.Text = viper.Count.ToString();
+                CountViperDone.Text = viperdone.Count.ToString();
+                CounterVip = 0;
+            }
+            else
+            {
                 txtDoingVip.Text = "Đang xử lí";
-                if (CheckTime(timer, present) == true)
-                {          
-                    viperdone.Add(1);
-                    viper.RemoveAt(0);
-                    txtDoingVip.Text = "Trống";
-                    CountViper.Text = viper.Count.ToString();
-                    CountViperDone.Text = viperdone.Count.ToString();
-                    present = 0;
-                }
-                else
-                    present++;
-            
+                CounterVip++;
+            }
+        }
+
+        private void DoorOnlineDoing(int Time)
+        {
+            if (Time - CounterOnline == 0)
+            {
+                onlinedone.Add(2);
+                onliner.RemoveAt(0);
+                txtDoingOnline.Text = "Trống";
+                CountOnliner.Text = onliner.Count.ToString();
+                CountOnlineDone.Text = onlinedone.Count.ToString();
+                CounterOnline = 0;
+            }
+            else
+            {
+                txtDoingOnline.Text = "Đang xử lí";
+                CounterOnline++;
+            }
+        }
+
+        private void DoorGuestDoing(int Time)
+        {
+            if (Time - CounterGuest == 0)
+            {
+                guestsdone.Add(3);
+                guests.RemoveAt(0);
+                txtDoingGuest.Text = "Trống";
+                CountGuests.Text = guests.Count.ToString();
+                CountGuestsDone.Text = guestsdone.Count.ToString();
+                CounterGuest = 0;
+            }
+            else
+            {
+                txtDoingGuest.Text = "Đang xử lí";
+                CounterGuest++;
+            }
         }
     }
 }
