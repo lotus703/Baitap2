@@ -64,6 +64,7 @@
             this.txtDoingOnline = new System.Windows.Forms.Label();
             this.txtDoingGuest = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -316,6 +317,7 @@
             this.button2.TabIndex = 29;
             this.button2.Text = "Stop";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label13
             // 
@@ -375,11 +377,22 @@
             this.label14.TabIndex = 35;
             this.label14.Text = "Hoạt động";
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(232, 293);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(41, 13);
+            this.label15.TabIndex = 36;
+            this.label15.Text = "label15";
+         
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.txtDoingGuest);
             this.Controls.Add(this.txtDoingOnline);
@@ -458,6 +471,7 @@
         private System.Windows.Forms.Label txtDoingOnline;
         private System.Windows.Forms.Label txtDoingGuest;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
     }
 }
 

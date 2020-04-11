@@ -15,8 +15,10 @@ namespace WindowsFormsApp2
 {
     public partial class Form1 : Form
     {
+        string abc;
         int counter = 0;
         int n;
+        int typeCustumer;
         List<int> passenger = new List<int>();
 
         //Visual Studio
@@ -75,27 +77,31 @@ namespace WindowsFormsApp2
             }
             else
             {
-                Random rand = new Random();
-                int a = rand.Next(1, 4);
-                passenger.Add(2);
+                //Random rand = new Random();
+                //int a = rand.Next(1, 4);
+                typeCustumer = RandomPassenger();
+                passenger.Add(typeCustumer);
                 CountPassenger.Text = passenger.Count.ToString();
-                if (a == 1)
+                if (typeCustumer == 1)
                 {
                     label1.Text = "Thuong gia";
-                    viper.Add(a);
+                    SharePassenger(onliner, guests, viper, typeCustumer);
+                    //viper.Add(a);
                     CountViper.Text = viper.Count.ToString();
                     
                 }
-                if (a == 2)
+                if (typeCustumer == 2)
                 {
                     label1.Text = "Dat ve online";
-                    onliner.Add(a);
+                    SharePassenger(viper, guests, onliner, typeCustumer);
+                    //onliner.Add(typeCustumer);
                     CountOnliner.Text = onliner.Count.ToString();
                 }
-                if (a == 3)
+                if (typeCustumer == 3)
                 {
                     label1.Text = "Thuong";
-                    guests.Add(a);
+                    SharePassenger(onliner, viper, guests, typeCustumer);
+                    //guests.Add(a);
                     CountGuests.Text = guests.Count.ToString();
                 }
                 counter++;
@@ -103,20 +109,23 @@ namespace WindowsFormsApp2
 
             if (viper.Count > 0)
             {
-                Random time = new Random();
-                int Time = time.Next(int.Parse(txtTimeStartVip.Text), int.Parse(txtTimeStartVip.Text));
+                //Random time = new Random();
+                //int Time = time.Next(int.Parse(txtTimeStartVip.Text), int.Parse(txtTimeStartVip.Text));
+                int Time = RandomTime(int.Parse(txtTimeStartVip.Text), int.Parse(txtTimeStartVip.Text));
                 DoorVipDoing(Time);
             }
             if (onliner.Count > 0)
             {
-                Random time = new Random();
-                int Time = time.Next(int.Parse(txtTimeStartOnline.Text), int.Parse(txtTimeEndOnline.Text));
+                //Random time = new Random();
+                //int Time = time.Next(int.Parse(txtTimeStartOnline.Text), int.Parse(txtTimeEndOnline.Text));
+                int Time = RandomTime(int.Parse(txtTimeStartOnline.Text), int.Parse(txtTimeEndOnline.Text));
                 DoorOnlineDoing(Time);
             }
             if (guests.Count > 0)
             {
-                Random time = new Random();
-                int Time = time.Next(int.Parse(txtTimeStartGuest.Text), int.Parse(txtTimeEndGuest.Text));
+                //Random time = new Random();
+                //int Time = time.Next(int.Parse(txtTimeStartGuest.Text), int.Parse(txtTimeEndGuest.Text));
+                int Time = RandomTime(int.Parse(txtTimeStartGuest.Text), int.Parse(txtTimeEndGuest.Text));
                 DoorGuestDoing(Time);
             }
         }
@@ -173,6 +182,51 @@ namespace WindowsFormsApp2
                 txtDoingGuest.Text = "Đang xử lí";
                 CounterGuest++;
             }
+        }
+        public void SharePassenger(List<int> a, List<int> b, List<int> c, int typePassenger)
+        {
+            if ((a.Count() == 0 || b.Count() == 0) && (c.Count() != 0))
+            {
+                if (a.Count() == 0)
+                {
+                    a.Add(typePassenger);
+                }
+                else
+                {
+                    b.Add(typePassenger);
+                }
+            }
+            else c.Add(typePassenger);
+        }
+        //chia tỉ lệ khách, 10% rich kid, 30% online, 60% thường
+        public int RandomPassenger()
+        {
+            Random rand = new Random();
+            int perCent = rand.Next(0, 100);
+            if (perCent < 10)
+            {
+                return 1;
+            }
+            else if (perCent < 30)
+            {
+                return 2;
+            }
+            else
+                return 3;
+        }
+        public int RandomTime(int a, int b)
+        {
+            Random rand = new Random();
+            return rand.Next(a,b);
+        }
+        //Show danh sách hành khách
+        private void button2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < passenger.Count(); i++)
+            {
+                abc += passenger[i].ToString();
+            }
+            label15.Text = abc;
         }
     }
 }
